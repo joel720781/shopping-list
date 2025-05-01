@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My first page</title>
+    <style>
+        .checked {
+          text-decoration: line-through;
+          color: gray;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <p>This is my first HTML page</p>
+    <h1>🛒 我的購物清單</h1>
+
+<ul id="shoppingList">
+        <li><input type="checkbox" onchange="toggleChecked(this)"> <span>牛奶</span></li>
+        <li><input type="checkbox" onchange="toggleChecked(this)"> <span>雞蛋</span></li>
+        <li><input type="checkbox" onchange="toggleChecked(this)"> <span>吐司</span></li>
+        <li><input type="checkbox" onchange="toggleChecked(this)"> <span>蘋果</span></li>
+        <li><input type="checkbox" onchange="toggleChecked(this)"> <span>洗衣精</span></li>
+</ul>
+    <input type="text" id="itemInput" placeholder="輸入新項目">
+    <button onclick="addItem()">新增</button>
+    <p id="progress">
+    <script>
+        function toggleChecked(checkbox) {
+          const item = checkbox.nextElementSibling;
+          if (checkbox.checked) {
+            item.classList.add("checked");
+          } else {
+            item.classList.remove("checked");
+          }
+           updateProgress();
+        }
+        function addItem() {
+      const input = document.getElementById("itemInput");
+      const text = input.value.trim();
+
+      if (text === "") return;
+
+      const ul = document.getElementById("shoppingList");
+      const li = document.createElement("li");
+
+      li.innerHTML = `<input type="checkbox" onchange="toggleChecked(this)"> <span>${text}</span>`;
+      ul.appendChild(li);
+
+      input.value = "";
+      updateProgress();
+    }
+        function updateProgress() {
+  const checkboxes = document.querySelectorAll("#shoppingList input[type='checkbox']");
+  const total = checkboxes.length;
+  const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+  document.getElementById("progress").innerText = `✅ 你已完成 ${checked} / ${total} 項目`;
+}
+    </script>
+</body>
+</html>
